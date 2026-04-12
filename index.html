@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote View - Legal Support</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; text-align: center; margin: 0; }
+        .header { background: #111; padding: 15px; border-bottom: 1px solid #0f0; }
+        #screen-view { width: 90%; max-width: 400px; margin-top: 20px; border: 2px solid #333; border-radius: 10px; }
+        .status { margin: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>SCREEN MONITOR (LEGAL)</h2>
+        <div id="status" class="status">Connecting to server...</div>
+    </div>
+
+    <img id="screen-view" src="" alt="Waiting for stream...">
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        // Jab server host ho jaye toh yahan URL badlein ge
+        const socket = io('https://aapka-server-url.onrender.com'); 
+        const status = document.getElementById('status');
+        const screenView = document.getElementById('screen-view');
+
+        socket.on('connect', () => {
+            status.innerText = "CONNECTED: Ready to receive screen";
+            status.style.color = "#0f0";
+        });
+
+        socket.on('screen-data', (base64Image) => {
+            screenView.src = "data:image/jpeg;base64," + base64Image;
+        });
+
+        socket.on('disconnect', () => {
+            status.innerText = "DISCONNECTED: Server offline";
+            status.style.color = "red";
+        });
+    </script>
+</body>
+</html>
