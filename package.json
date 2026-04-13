@@ -1,0 +1,13 @@
+{
+  "name": "screen-mirror",
+  "version": "1.0.0",
+  "description": "Remote screen mirroring server",
+  "main": "Server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "scripts": {
+    "start": "node Server.js"
+  }
+}
